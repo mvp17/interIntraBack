@@ -1,3 +1,5 @@
+@file:Suppress("JpaDataSourceORMInspection")
+
 package com.interapp.externa.config.user
 
 import jakarta.persistence.*
