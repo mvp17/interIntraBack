@@ -18,4 +18,7 @@ class GodfatherSearch(
         }
         return godfathers
     }
+    fun findGodfatherById(id: Long): Godfather {
+        return godfatherRepository.findById(id).orElseThrow()
+    }
 }
