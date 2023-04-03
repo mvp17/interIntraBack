@@ -1,9 +1,9 @@
 package com.interapp.externa.config
 
-import com.interapp.externa.config.user.UserDetailsService
-import com.interapp.externa.config.jwt.JwtAuthenticationFilter
-import com.interapp.externa.config.jwt.JwtAuthorizationFilter
-import com.interapp.externa.config.jwt.JwtService
+import com.interapp.externa.core.user.application.UserDetailsService
+import com.interapp.externa.modules.login.application.jwt.JwtAuthenticationFilter
+import com.interapp.externa.modules.login.application.jwt.JwtAuthorizationFilter
+import com.interapp.externa.modules.login.application.jwt.JwtService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
