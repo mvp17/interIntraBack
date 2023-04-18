@@ -35,8 +35,7 @@ class SecurityConfig(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         val authenticationManager = authManager(http)
         http.authorizeHttpRequests()
-            .requestMatchers("/api/v1/auth/**",
-                             "/api/v1/treeViewer/**"
+            .requestMatchers("/api/v1/auth/**", "/api/v1/treeViewer/**", "/api/v1/adoptions/total"
             ).permitAll().anyRequest().authenticated().and()
             .cors().and()
             .csrf().disable()

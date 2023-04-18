@@ -13,4 +13,8 @@ class AdoptionSearch(private val adoptionRepository: AdoptionRepository) {
     fun findAdoptionById(id: Long): Adoption {
         return adoptionRepository.findById(id).orElseThrow()
     }
+
+    fun findAdoptions(): MutableList<Adoption> {
+        return adoptionRepository.findAll()
+    }
 }

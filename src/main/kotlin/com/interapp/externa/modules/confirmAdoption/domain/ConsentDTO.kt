@@ -9,6 +9,6 @@ data class ConsentDTO(
     val guardianConsentDate: String,
     val visibleForOthers: Boolean,
     val visibleForOthersConsentDate: String,
-    val comentario: String,
+    val comment: String,
     val representativeId: Long
 )

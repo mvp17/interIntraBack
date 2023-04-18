@@ -14,4 +14,8 @@ class RepresentativeSearch(private val representativeRepository: RepresentativeR
                 throw ResponseStatusException(HttpStatus.NOT_FOUND, "Representative not found!")
             }
     }
+
+    fun findRepresentatives(): MutableList<Representative> {
+        return representativeRepository.findAll()
+    }
 }
