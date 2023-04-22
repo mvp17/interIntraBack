@@ -21,9 +21,6 @@ data class Tree(
     @Column(name = "especie")
     var species: String,
 
-    @Column(name = "distancia_padrino")
-    var godfatherDistance: Float,
-
     @Column(name = "coord_x")
     var xCoord: Float,
 

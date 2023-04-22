@@ -5,7 +5,7 @@ import com.interapp.externa.core.adoption.domain.AdoptionRepository
 import org.springframework.stereotype.Service
 
 @Service
-class AdoptionSearch(private val adoptionRepository: AdoptionRepository) {
+class AdoptionService(private val adoptionRepository: AdoptionRepository) {
     fun findAdoptionsByRepresentativeId(representativeId: Long): MutableList<Adoption> {
         return adoptionRepository.findAdoptionsByRepresentativeId(representativeId)
     }
@@ -16,5 +16,9 @@ class AdoptionSearch(private val adoptionRepository: AdoptionRepository) {
 
     fun findAdoptions(): MutableList<Adoption> {
         return adoptionRepository.findAll()
+    }
+
+    fun addAdoption(adoption: Adoption): Adoption {
+        return adoptionRepository.save(adoption)
     }
 }

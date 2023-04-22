@@ -5,19 +5,19 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "recien_nacidos")
 data class NewBorn(
-    @Column(name = "nombre")
+    @Column(name = "name")
     var name: String,
 
-    @Column(name = "apellido1")
+    @Column(name = "last_name1")
     var lastName1: String,
 
-    @Column(name = "apellido2")
+    @Column(name = "last_name2")
     var lastName2: String,
 
-    @Column(name = "genero")
+    @Column(name = "gender")
     val gender: String,
 
-    @Column(name = "fecha_nacimiento")
+    @Column(name = "birthday")
     var birthday: String,
 
     @Column(name = "representative_id")

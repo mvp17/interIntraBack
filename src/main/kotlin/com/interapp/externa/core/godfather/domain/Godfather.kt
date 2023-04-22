@@ -1,38 +1,42 @@
 package com.interapp.externa.core.godfather.domain
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.Table
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
+import jakarta.persistence.*
+import java.sql.Date
 
 
 @Entity
-@Table(name = "godfather")
+@Table(name = "godfathers")
 data class Godfather(
-    @Column(name = "nombre")
+    @Column(name = "name")
     var name: String,
 
-    @Column(name = "apellido1")
+    @Column(name = "last_name1")
     var lastName1: String,
 
-    @Column(name = "apellido2")
+    @Column(name = "last_name2")
     var lastName2: String,
 
-    @Column(name = "genero")
+    @Column(name = "gender")
     val gender: String,
 
-    @Column(name = "fecha_nacimiento")
-    var birthday: String,
+    @Column(name = "birthday")
+    var birthday: Date,
 
-    @Column(name = "distrito")
+    @Column(name = "district")
     val district: String,
 
-    @Column(name = "barrio")
+    @Column(name = "neigh")
     val neigh: String,
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
+    @SequenceGenerator(
+        name = "\"godfathers_id_seq\"",
+        allocationSize = 1
+    )
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "\"godfathers_id_seq\""
+    )
     @Column(name = "id")
     val id: Long
 )

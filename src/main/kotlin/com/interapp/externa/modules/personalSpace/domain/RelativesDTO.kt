@@ -4,7 +4,7 @@ import com.interapp.externa.core.representative.domain.Representative
 
 data class RelativesDTO(
     val representative: Representative,
-    val newBorns: MutableList<NewBornDTO>,
+    val newborns: MutableList<NewBornDTO>,
     val padronAddress: ElectoralRollAddressDTO,
     val bdcLocation: BDCLocationDTO
 )
