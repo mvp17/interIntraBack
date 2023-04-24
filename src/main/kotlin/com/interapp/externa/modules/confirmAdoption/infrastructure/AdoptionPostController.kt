@@ -28,16 +28,45 @@ class AdoptionPostController(
         val godfatherDTO = body.godfatherDTO
         val bdcLocationDTO = body.bdcLocationDTO
 
-        var newGodfather = Godfather(godfatherDTO.name,
-                                     godfatherDTO.lastName1,
-                                     godfatherDTO.lastName2,
-                                     godfatherDTO.gender,
-                                     godfatherDTO.birthday,
-                                     bdcLocationDTO.district,
-                                     bdcLocationDTO.neigh,
+        val currentGodfather: Godfather? = godfatherService
+                                                .findGodfatherByNameAndBirthday(godfatherDTO.name,
+                                                                                godfatherDTO.birthday.toString())
+        var newAdoption:Adoption
+        if (currentGodfather != null) {
+            Adoption(adoptionDTO.adoptionDate,
+                     currentGodfather.id,
+                     consentDTO.representativeId,
+                     treeDTO.id,
+                     treeDTO.district,
+                     treeDTO.neigh,
+                     adoptionDTO.godfatherDistance,
+                  0).also { newAdoption = it }
+            val newConsent = Consent(consentDTO.censusConsent,
+                                     consentDTO.censusConsentDate,
+                                     consentDTO.adultAuthorization,
+                                     consentDTO.adultAuthorizationDate,
+                                     consentDTO.guardian,
+                                     consentDTO.guardianConsentDate,
+                                     consentDTO.visibleOthers,
+                                     consentDTO.visibleOthersConsentDate,
+                                     consentDTO.comment,
+                                     consentDTO.representativeId,
+                                     currentGodfather.id,
+                                     newAdoption.id,
                                   0)
-        newGodfather = godfatherService.addGodfather(newGodfather)
-        var newAdoption = Adoption(adoptionDTO.adoptionDate,
+            consentService.addConsent(newConsent)
+        }
+        else {
+            var newGodfather = Godfather(godfatherDTO.name,
+                                         godfatherDTO.lastName1,
+                                         godfatherDTO.lastName2,
+                                         godfatherDTO.gender,
+                                         godfatherDTO.birthday,
+                                         bdcLocationDTO.district,
+                                         bdcLocationDTO.neigh,
+                0)
+            newGodfather = godfatherService.addGodfather(newGodfather)
+            newAdoption = Adoption(adoptionDTO.adoptionDate,
                                    newGodfather.id,
                                    consentDTO.representativeId,
                                    treeDTO.id,
@@ -45,20 +74,22 @@ class AdoptionPostController(
                                    treeDTO.neigh,
                                    adoptionDTO.godfatherDistance,
                                 0)
+            val newConsent = Consent(consentDTO.censusConsent,
+                                     consentDTO.censusConsentDate,
+                                     consentDTO.adultAuthorization,
+                                     consentDTO.adultAuthorizationDate,
+                                     consentDTO.guardian,
+                                     consentDTO.guardianConsentDate,
+                                     consentDTO.visibleOthers,
+                                     consentDTO.visibleOthersConsentDate,
+                                     consentDTO.comment,
+                                     consentDTO.representativeId,
+                                     newGodfather.id,
+                                     newAdoption.id,
+                                  0)
+            consentService.addConsent(newConsent)
+        }
         newAdoption = adoptionService.addAdoption(newAdoption)
-        val newConsent = Consent(consentDTO.censusConsent,
-                                 consentDTO.censusConsentDate,
-                                 consentDTO.adultAuthorization,
-                                 consentDTO.adultAuthorizationDate,
-                                 consentDTO.guardian,
-                                 consentDTO.guardianConsentDate,
-                                 consentDTO.visibleOthers,
-                                 consentDTO.visibleOthersConsentDate,
-                                 consentDTO.comment,
-                                 consentDTO.representativeId, newGodfather.id, newAdoption.id,
-                              0)
-        consentService.addConsent(newConsent)
-
         return ConfirmationResponse(newAdoption.id)
     }
 }

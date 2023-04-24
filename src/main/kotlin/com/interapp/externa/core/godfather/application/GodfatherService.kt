@@ -15,4 +15,8 @@ class GodfatherService(
     fun addGodfather(godfather: Godfather): Godfather {
         return godfatherRepository.save(godfather)
     }
+
+    fun findGodfatherByNameAndBirthday(name: String, birthday: String): Godfather? {
+        return godfatherRepository.findGodfatherByNameAndBirthday(name, birthday)
+    }
 }
