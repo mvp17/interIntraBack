@@ -1,6 +1,6 @@
 package com.interapp.externa.modules.confirmAdoption.domain
 
-import com.interapp.externa.modules.personalSpace.domain.BDCLocationDTO
+import com.interapp.externa.modules.adopt.domain.BDCLocationDTO
 
 data class AdoptionConfirmationRequest(
     val adoptionDTO: AdoptionDTO,

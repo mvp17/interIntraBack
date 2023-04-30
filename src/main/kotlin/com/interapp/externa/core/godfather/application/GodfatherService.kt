@@ -19,4 +19,8 @@ class GodfatherService(
     fun findGodfatherByNameAndBirthday(name: String, birthday: String): Godfather? {
         return godfatherRepository.findGodfatherByNameAndBirthday(name, birthday)
     }
+
+    fun deleteGodfatherById(id: Long) {
+        godfatherRepository.deleteById(id)
+    }
 }

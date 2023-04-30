@@ -1,6 +1,6 @@
-package com.interapp.externa.modules.personalSpace.domain
+package com.interapp.externa.modules.adopt.domain
 
-data class NewBornDTO(
+data class NewbornDTO(
     val name: String,
     val lastName1: String,
     val lastName2: String,

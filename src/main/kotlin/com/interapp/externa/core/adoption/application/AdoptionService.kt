@@ -21,4 +21,8 @@ class AdoptionService(private val adoptionRepository: AdoptionRepository) {
     fun addAdoption(adoption: Adoption): Adoption {
         return adoptionRepository.save(adoption)
     }
+
+    fun deleteAdoptionById(id: Long) {
+        adoptionRepository.deleteById(id)
+    }
 }

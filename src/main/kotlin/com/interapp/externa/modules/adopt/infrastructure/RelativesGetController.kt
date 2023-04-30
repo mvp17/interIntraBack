@@ -1,20 +1,20 @@
-package com.interapp.externa.modules.personalSpace.infrastructure
+package com.interapp.externa.modules.adopt.infrastructure
 
 import com.interapp.externa.core.bdcLocation.application.BDCLocationSearch
 import com.interapp.externa.core.electoralRollAddress.application.ElectoralRollAddressSearch
 import com.interapp.externa.core.newBorn.application.NewBornSearch
 import com.interapp.externa.core.representative.application.RepresentativeSearch
-import com.interapp.externa.modules.personalSpace.domain.BDCLocationDTO
-import com.interapp.externa.modules.personalSpace.domain.ElectoralRollAddressDTO
-import com.interapp.externa.modules.personalSpace.domain.NewBornDTO
-import com.interapp.externa.modules.personalSpace.domain.RelativesDTO
+import com.interapp.externa.modules.adopt.domain.BDCLocationDTO
+import com.interapp.externa.modules.adopt.domain.ElectoralRollAddressDTO
+import com.interapp.externa.modules.adopt.domain.NewbornDTO
+import com.interapp.externa.modules.adopt.domain.RelativesDTO
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1/representative/relatives")
+@RequestMapping("/api/v1/adopt")
 class RelativesGetController(
     private val representativeSearch: RepresentativeSearch,
     private val newBornSearch: NewBornSearch,
@@ -22,19 +22,19 @@ class RelativesGetController(
     private val electoralRollAddressSearch: ElectoralRollAddressSearch
 ) {
 
-    @GetMapping("/{id}")
+    @GetMapping("/representative/relatives/{id}")
     fun getRelatives(@PathVariable id: Long): RelativesDTO {
         val representative = representativeSearch.findRepresentativeById(id)
-        val newBorns = newBornSearch.findNewBornsByRepresentativeId(representative.id)
-        val newBornsDTO = mutableListOf<NewBornDTO>()
-        for (newBorn in newBorns) {
-            val newBornDTO = NewBornDTO(newBorn.name,
-                                          newBorn.lastName1,
-                                          newBorn.lastName2,
-                                          newBorn.gender,
-                                          newBorn.birthday
+        val newborns = newBornSearch.findNewBornsByRepresentativeId(representative.id)
+        val newbornsDTO = mutableListOf<NewbornDTO>()
+        for (newborn in newborns) {
+            val newbornDTO = NewbornDTO(newborn.name,
+                                          newborn.lastName1,
+                                          newborn.lastName2,
+                                          newborn.gender,
+                                          newborn.birthday
                                           )
-            newBornsDTO.add(newBornDTO)
+            newbornsDTO.add(newbornDTO)
         }
         val electoralRollAddress = electoralRollAddressSearch.findPadronAddressesByRepresentativeId(representative.id)
         val electoralRollAddressDTO = ElectoralRollAddressDTO(electoralRollAddress[0].paStreetType,
@@ -63,6 +63,6 @@ class RelativesGetController(
                                             bdcLocation.neigh,
                                             bdcLocation.id
                                             )
-        return RelativesDTO(representative, newBornsDTO, electoralRollAddressDTO ,bdcLocationDTO)
+        return RelativesDTO(representative, newbornsDTO, electoralRollAddressDTO ,bdcLocationDTO)
     }
 }

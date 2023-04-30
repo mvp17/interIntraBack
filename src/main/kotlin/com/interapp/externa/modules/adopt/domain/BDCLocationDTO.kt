@@ -1,4 +1,4 @@
-package com.interapp.externa.modules.personalSpace.domain
+package com.interapp.externa.modules.adopt.domain
 
 data class BDCLocationDTO(
     val streetType: String,

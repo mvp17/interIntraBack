@@ -6,9 +6,14 @@ import org.springframework.stereotype.Service
 
 @Service
 class ConsentService(private val consentRepository: ConsentRepository) {
-
     fun addConsent(consent: Consent): Consent {
         return consentRepository.save(consent)
     }
 
+    fun findConsentByAdoptionId(adoptionId: Long): Consent {
+        return consentRepository.findConsentByAdoptionId(adoptionId)
+    }
+    fun deleteConsent(consent: Consent) {
+        consentRepository.delete(consent)
+    }
 }
