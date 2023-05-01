@@ -1,16 +1,14 @@
 package com.interapp.externa.modules.confirmAdoption.domain
 
-import java.sql.Date
-
 data class ConsentDTO(
     val censusConsent: Boolean,
-    val censusConsentDate: Date,
+    val censusConsentDate: String,
     val adultAuthorization: Boolean,
-    val adultAuthorizationDate: Date,
+    val adultAuthorizationDate: String,
     val guardian: Boolean,
-    val guardianConsentDate: Date,
+    val guardianConsentDate: String,
     val visibleOthers: Boolean,
-    val visibleOthersConsentDate: Date?,
+    val visibleOthersConsentDate: String?,
     val comment: String,
     val representativeId: Long
 )

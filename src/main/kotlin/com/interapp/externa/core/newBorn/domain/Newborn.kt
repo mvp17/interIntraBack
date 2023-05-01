@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "recien_nacidos")
-data class NewBorn(
+data class Newborn(
     @Column(name = "name")
     var name: String,
 

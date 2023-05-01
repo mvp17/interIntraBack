@@ -21,6 +21,7 @@ class RevokeAdoptionPostController(
         val consent = consentService.findConsentByAdoptionId(body.adoptionId)
         consentService.deleteConsent(consent)
         adoptionService.deleteAdoptionById(body.adoptionId)
-        godfatherService.deleteGodfatherById(body.godfatherId)
+        val godfatherAdoptions = adoptionService.findAdoptionsByGodfatherId(body.godfatherId)
+        if (godfatherAdoptions.isEmpty()) godfatherService.deleteGodfatherById(body.godfatherId)
     }
 }

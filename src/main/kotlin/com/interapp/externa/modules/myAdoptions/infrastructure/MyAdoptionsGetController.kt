@@ -29,6 +29,7 @@ class MyAdoptionsGetController(
                                           tree.commonName,
                                           tree.xCoord,
                                           tree.yCoord,
+                                          adoption.distance,
                                           adoption.representativeId,
                                           tree.treePositionId
                                         )

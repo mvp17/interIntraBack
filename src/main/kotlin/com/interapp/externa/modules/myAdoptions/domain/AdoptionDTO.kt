@@ -7,6 +7,7 @@ data class AdoptionDTO(
     val treeName: String,
     val xCoord: Float,
     val yCoord: Float,
+    val distance: Float,
     val representativeId: Long,
     val treePositionId: Int,
 )

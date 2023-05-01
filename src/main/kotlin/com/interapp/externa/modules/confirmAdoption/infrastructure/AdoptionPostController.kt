@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.sql.Date
 
 @RestController
 @RequestMapping("/api/v1/confirm-adoption")
@@ -30,10 +31,11 @@ class AdoptionPostController(
 
         val currentGodfather: Godfather? = godfatherService
                                                 .findGodfatherByNameAndBirthday(godfatherDTO.name,
-                                                                                godfatherDTO.birthday.toString())
+                                                                                godfatherDTO.birthday)
         var newAdoption:Adoption
+        val visibleOthersConsentDate: Date?
         if (currentGodfather != null) {
-            Adoption(adoptionDTO.adoptionDate,
+            Adoption(Date.valueOf(adoptionDTO.adoptionDate),
                      currentGodfather.id,
                      consentDTO.representativeId,
                      treeDTO.id,
@@ -41,32 +43,39 @@ class AdoptionPostController(
                      treeDTO.neigh,
                      adoptionDTO.godfatherDistance,
                   0).also { newAdoption = it }
-            val newConsent = Consent(consentDTO.censusConsent,
-                                     consentDTO.censusConsentDate,
-                                     consentDTO.adultAuthorization,
-                                     consentDTO.adultAuthorizationDate,
-                                     consentDTO.guardian,
-                                     consentDTO.guardianConsentDate,
-                                     consentDTO.visibleOthers,
-                                     consentDTO.visibleOthersConsentDate,
-                                     consentDTO.comment,
-                                     consentDTO.representativeId,
-                                     currentGodfather.id,
-                                     newAdoption.id,
-                                  0)
-            consentService.addConsent(newConsent)
+            newAdoption = adoptionService.addAdoption(newAdoption)
+            visibleOthersConsentDate = if (!consentDTO.visibleOthersConsentDate.isNullOrEmpty())
+                Date.valueOf(consentDTO.visibleOthersConsentDate)
+            else null
+
+            Consent(consentDTO.censusConsent,
+                    Date.valueOf(consentDTO.censusConsentDate),
+                    consentDTO.adultAuthorization,
+                    Date.valueOf(consentDTO.adultAuthorizationDate),
+                    consentDTO.guardian,
+                    Date.valueOf(consentDTO.guardianConsentDate),
+                    consentDTO.visibleOthers,
+                    visibleOthersConsentDate,
+                    consentDTO.comment,
+                    consentDTO.representativeId,
+                    currentGodfather.id,
+                    newAdoption.id,
+                 0).also {
+                        val newConsent = it
+                        consentService.addConsent(newConsent)
+                    }
         }
         else {
             var newGodfather = Godfather(godfatherDTO.name,
                                          godfatherDTO.lastName1,
                                          godfatherDTO.lastName2,
                                          godfatherDTO.gender,
-                                         godfatherDTO.birthday,
+                                         Date.valueOf(godfatherDTO.birthday),
                                          bdcLocationDTO.district,
                                          bdcLocationDTO.neigh,
                 0)
             newGodfather = godfatherService.addGodfather(newGodfather)
-            newAdoption = Adoption(adoptionDTO.adoptionDate,
+            newAdoption = Adoption(Date.valueOf(adoptionDTO.adoptionDate),
                                    newGodfather.id,
                                    consentDTO.representativeId,
                                    treeDTO.id,
@@ -74,14 +83,18 @@ class AdoptionPostController(
                                    treeDTO.neigh,
                                    adoptionDTO.godfatherDistance,
                                 0)
+            newAdoption = adoptionService.addAdoption(newAdoption)
+            visibleOthersConsentDate = if (!consentDTO.visibleOthersConsentDate.isNullOrEmpty())
+                Date.valueOf(consentDTO.visibleOthersConsentDate)
+            else null
             val newConsent = Consent(consentDTO.censusConsent,
-                                     consentDTO.censusConsentDate,
+                                     Date.valueOf(consentDTO.censusConsentDate),
                                      consentDTO.adultAuthorization,
-                                     consentDTO.adultAuthorizationDate,
+                                     Date.valueOf(consentDTO.adultAuthorizationDate),
                                      consentDTO.guardian,
-                                     consentDTO.guardianConsentDate,
+                                     Date.valueOf(consentDTO.guardianConsentDate),
                                      consentDTO.visibleOthers,
-                                     consentDTO.visibleOthersConsentDate,
+                                     visibleOthersConsentDate,
                                      consentDTO.comment,
                                      consentDTO.representativeId,
                                      newGodfather.id,
@@ -89,7 +102,6 @@ class AdoptionPostController(
                                   0)
             consentService.addConsent(newConsent)
         }
-        newAdoption = adoptionService.addAdoption(newAdoption)
         return ConfirmationResponse(newAdoption.id)
     }
 }

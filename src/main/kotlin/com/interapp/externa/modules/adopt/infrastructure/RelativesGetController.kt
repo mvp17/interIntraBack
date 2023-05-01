@@ -2,7 +2,7 @@ package com.interapp.externa.modules.adopt.infrastructure
 
 import com.interapp.externa.core.bdcLocation.application.BDCLocationSearch
 import com.interapp.externa.core.electoralRollAddress.application.ElectoralRollAddressSearch
-import com.interapp.externa.core.newBorn.application.NewBornSearch
+import com.interapp.externa.core.newBorn.application.NewbornSearch
 import com.interapp.externa.core.representative.application.RepresentativeSearch
 import com.interapp.externa.modules.adopt.domain.BDCLocationDTO
 import com.interapp.externa.modules.adopt.domain.ElectoralRollAddressDTO
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/adopt")
 class RelativesGetController(
     private val representativeSearch: RepresentativeSearch,
-    private val newBornSearch: NewBornSearch,
+    private val newBornSearch: NewbornSearch,
     private val bdcLocationSearch: BDCLocationSearch,
     private val electoralRollAddressSearch: ElectoralRollAddressSearch
 ) {
@@ -25,7 +25,7 @@ class RelativesGetController(
     @GetMapping("/representative/relatives/{id}")
     fun getRelatives(@PathVariable id: Long): RelativesDTO {
         val representative = representativeSearch.findRepresentativeById(id)
-        val newborns = newBornSearch.findNewBornsByRepresentativeId(representative.id)
+        val newborns = newBornSearch.findNewbornsByRepresentativeId(representative.id)
         val newbornsDTO = mutableListOf<NewbornDTO>()
         for (newborn in newborns) {
             val newbornDTO = NewbornDTO(newborn.name,

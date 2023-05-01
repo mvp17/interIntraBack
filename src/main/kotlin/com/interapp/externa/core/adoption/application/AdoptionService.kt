@@ -10,6 +10,10 @@ class AdoptionService(private val adoptionRepository: AdoptionRepository) {
         return adoptionRepository.findAdoptionsByRepresentativeId(representativeId)
     }
 
+    fun findAdoptionsByGodfatherId(godfatherId: Long): MutableList<Adoption> {
+        return adoptionRepository.findAdoptionsByGodfatherId(godfatherId)
+    }
+
     fun findAdoptionById(id: Long): Adoption {
         return adoptionRepository.findById(id).orElseThrow()
     }

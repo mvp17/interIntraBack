@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository
 interface AdoptionRepository: JpaRepository<Adoption, Long> {
     @Query("select a from Adoption a where a.representativeId = ?1")
     fun findAdoptionsByRepresentativeId(id: Long): MutableList<Adoption>
+
+    @Query("select a from Adoption a where a.godfatherId = ?1")
+    fun findAdoptionsByGodfatherId(id: Long): MutableList<Adoption>
 }

@@ -33,9 +33,6 @@ data class Tree(
     @Column(name = "barrio_arbol")
     var neigh: String,
 
-    @Column(name = "adoptado")
-    var adopted: Boolean,
-
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     val id: Long

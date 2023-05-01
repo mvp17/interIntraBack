@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface NewBornRepository: JpaRepository<NewBorn, Long> {
-    @Query("select nb from NewBorn nb where nb.representativeId = ?1")
-    fun findNewBornsByRepresentativeId(id: Long): MutableList<NewBorn>
+interface NewbornRepository: JpaRepository<Newborn, Long> {
+    @Query("select nb from Newborn nb where nb.representativeId = ?1")
+    fun findNewbornsByRepresentativeId(id: Long): MutableList<Newborn>
 }
