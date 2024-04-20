@@ -1,7 +1,7 @@
 package com.interapp.externa.modules.myAdoptions.infrastructure
 
-import com.interapp.externa.core.adoption.application.AdoptionService
-import com.interapp.externa.core.godfather.application.GodfatherService
+import com.interapp.externa.core.adoption.application.search.SearchAdoptionById
+import com.interapp.externa.core.godfather.application.search.SearchGodfatherById
 import com.interapp.externa.core.tree.application.TreeSearch
 import com.interapp.externa.modules.myAdoptions.domain.CertificateDTO
 import org.springframework.web.bind.annotation.GetMapping
@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/representative/adoptions")
 class CertificateDataGetController(
-    private val adoptionService: AdoptionService,
-    private val godfatherService: GodfatherService,
+    private val searchAdoptionById: SearchAdoptionById,
+    private val searchGodfatherById: SearchGodfatherById,
     private val treeSearch: TreeSearch
 ) {
     @GetMapping("/certificate/{adoptionId}")
     fun getCertificateData(@PathVariable adoptionId: Long): CertificateDTO {
-        val adoption = adoptionService.findAdoptionById(adoptionId)
-        val godfather = godfatherService.findGodfatherById(adoption.godfatherId)
+        val adoption = searchAdoptionById.findAdoptionById(adoptionId)
+        val godfather = searchGodfatherById.findGodfatherById(adoption.godfatherId)
         val tree = treeSearch.findTreeById(adoption.treeId)
         return CertificateDTO(godfather.name,
             godfather.birthday,

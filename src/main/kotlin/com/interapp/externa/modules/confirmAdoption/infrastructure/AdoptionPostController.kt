@@ -5,6 +5,7 @@ import com.interapp.externa.core.adoption.domain.Adoption
 import com.interapp.externa.core.consent.application.ConsentService
 import com.interapp.externa.core.consent.domain.Consent
 import com.interapp.externa.core.godfather.application.GodfatherService
+import com.interapp.externa.core.godfather.application.search.SearchGodfatherByName
 import com.interapp.externa.core.godfather.domain.Godfather
 import com.interapp.externa.modules.confirmAdoption.domain.AdoptionConfirmationRequest
 import com.interapp.externa.modules.confirmAdoption.domain.ConfirmationResponse
@@ -19,6 +20,7 @@ import java.sql.Date
 class AdoptionPostController(
     private val adoptionService: AdoptionService,
     private val godfatherService: GodfatherService,
+    private val searchGodfatherByName: SearchGodfatherByName,
     private val consentService: ConsentService
 ) {
     @PostMapping
@@ -29,7 +31,7 @@ class AdoptionPostController(
         val godfatherDTO = body.godfatherDTO
         val bdcLocationDTO = body.bdcLocationDTO
 
-        val currentGodfather: Godfather? = godfatherService
+        val currentGodfather: Godfather? = searchGodfatherByName
                                                 .findGodfatherByNameAndBirthday(godfatherDTO.name,
                                                                                 godfatherDTO.birthday)
         var newAdoption:Adoption
