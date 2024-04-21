@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 class GetRepresentativesController(private val representativeSearch: RepresentativeSearch) {
 
     @GetMapping("/signin/representatives")
-    fun getRepresentatives(): MutableList<Representative> {
+    fun getRepresentatives(): List<Representative> {
         return representativeSearch.findRepresentatives()
     }
 }

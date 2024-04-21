@@ -15,7 +15,7 @@ class RepresentativeSearch(private val representativeRepository: RepresentativeR
             }
     }
 
-    fun findRepresentatives(): MutableList<Representative> {
+    fun findRepresentatives(): List<Representative> {
         return representativeRepository.findAll()
     }
 }

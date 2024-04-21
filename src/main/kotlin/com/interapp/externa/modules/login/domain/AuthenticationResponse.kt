@@ -4,4 +4,6 @@ import java.beans.ConstructorProperties
 
 data class AuthenticationResponse
 @ConstructorProperties("token")
-constructor(val token: String)
+constructor(val token: String,
+            val userId: Long
+)

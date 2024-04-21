@@ -14,7 +14,7 @@ data class User(
     val email: String,
 
     @Column(name = "passw")
-    var pass_word: String,
+    var password: String,
 
     @Id
     @SequenceGenerator(name = "\"usuarios_id_seq\"", allocationSize = 1)
